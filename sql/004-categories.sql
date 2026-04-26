@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS categories (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(32) UNIQUE NOT NULL,
+    name VARCHAR(128) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+ALTER TABLE products ADD COLUMN IF NOT EXISTS category_id INTEGER;
+ALTER TABLE products ADD CONSTRAINT IF NOT EXISTS fk_products_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL;
